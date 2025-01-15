@@ -7,48 +7,33 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import static org.junit.jupiter.api.Assertions.*;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
 
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
+import java.util.Arrays;
+import java.util.List;
+
 
 @ExtendWith(MockitoExtension.class)
 public class AddressServiceTest {
     @InjectMocks
     private AddressService addressService;
-    @Mock
-    private RestTemplate restTemplate;
+
 
     @Test
     void testIsValidAddress(){
         Address addressTest = new Address("Avenida Moinho Fabrini",
                 "592", "Independência", "São Bernardo do Campo", "São Paulo", "09861160", "Brasil" );
 
-        String jsonResponse = "{"
-                + "\"cep\":\"09861-160\","
-                + "\"logradouro\":\"Avenida Moinho Fabrini\","
-                + "\"complemento\":\"até 609/610\","
-                + "\"unidade\":\"\","
-                + "\"bairro\":\"Independência\","
-                + "\"localidade\":\"São Bernardo do Campo\","
-                + "\"uf\":\"SP\","
-                + "\"estado\":\"São Paulo\","
-                + "\"regiao\":\"Sudeste\","
-                + "\"ibge\":\"3548708\","
-                + "\"gia\":\"6350\","
-                + "\"ddd\":\"11\","
-                + "\"siafi\":\"7075\""
-                + "}";
+        ValidadorAddress mockValidator1 = Mockito.mock(ValidadorAddress.class);
+        ValidadorAddress mockValidator2 = Mockito.mock(ValidadorAddress.class);
 
-        ResponseEntity<String> responseEntity = new ResponseEntity<>(jsonResponse, HttpStatus.OK);
+        Mockito.when(mockValidator1.validar(addressTest)).thenReturn(true);
+        Mockito.when(mockValidator2.validar(addressTest)).thenReturn(true);
+        List<ValidadorAddress> validators = Arrays.asList(mockValidator1, mockValidator2);
+        AddressService service = new AddressService(validators);
 
-        Mockito.when(restTemplate.getForEntity(anyString(), eq(String.class))).thenReturn(responseEntity);
 
-        boolean result = addressService.isValidAddress(addressTest);
+        boolean result = service.isValidAddress(addressTest);
 
         assertTrue(result, "Deu certo");
 
