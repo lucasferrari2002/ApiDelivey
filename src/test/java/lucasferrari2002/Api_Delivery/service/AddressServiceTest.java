@@ -18,19 +18,19 @@ public class AddressServiceTest {
     @InjectMocks
     private AddressService addressService;
 
+    @Mock
+    private ValidadorAddress validadorAddress;
+
 
     @Test
     void testIsValidAddress(){
-        Address addressTest = new Address("Avenida Moinho Fabrini",
-                "592", "Independência", "São Bernardo do Campo", "São Paulo", "09861160", "Brasil" );
+        Address addressTest = new Address();
 
-        ValidadorAddress mockValidator1 = Mockito.mock(ValidadorAddress.class);
-        ValidadorAddress mockValidator2 = Mockito.mock(ValidadorAddress.class);
 
-        Mockito.when(mockValidator1.validar(addressTest)).thenReturn(true);
-        Mockito.when(mockValidator2.validar(addressTest)).thenReturn(true);
-        List<ValidadorAddress> validators = Arrays.asList(mockValidator1, mockValidator2);
-        AddressService service = new AddressService(validators);
+        Mockito.when(validadorAddress.validar(addressTest)).thenReturn(true);
+
+
+        AddressService service = new AddressService(validadorAddress);
 
 
         boolean result = service.isValidAddress(addressTest);

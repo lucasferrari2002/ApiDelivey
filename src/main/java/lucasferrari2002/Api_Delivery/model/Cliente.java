@@ -28,4 +28,17 @@ public class Cliente {
         this.cpf = cpf;
         this.dadosPessoais = dadosPessoais;
     }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public DadosPessoais getDadosPessoais() {
+        return dadosPessoais;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
 }

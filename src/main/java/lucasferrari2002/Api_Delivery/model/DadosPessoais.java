@@ -23,12 +23,7 @@ public class DadosPessoais {
     @NotNull(message = "O endereço é obrigatório.")
     private Address address;
 
-    public DadosPessoais(String nome, Integer idade, String email, String telefone, Address address) {
-        this.nome = nome;
-        this.idade = idade;
-        this.email = email;
-        this.telefone = telefone;
-        this.address = address;
+    public DadosPessoais() {
     }
 
     public String getNome() {

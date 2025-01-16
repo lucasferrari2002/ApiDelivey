@@ -1,5 +1,8 @@
 package lucasferrari2002.Api_Delivery.model;
 
+import jakarta.persistence.Embeddable;
+
+@Embeddable
 public class Address {
 
     private String street;
@@ -18,25 +21,7 @@ public class Address {
 
     private String country;
 
-    public Address(String street, String number, String neighborhood, String city, String state, String postalCode, String country) {
-        this.street = street;
-        this.number = number;
-        this.neighborhood = neighborhood;
-        this.city = city;
-        this.state = state;
-        this.postalCode = postalCode;
-        this.country = country;
-    }
-
-    public Address(String street, String number, String neighborhood, String complemento, String city, String state, String postalCode, String country) {
-        this.street = street;
-        this.number = number;
-        this.neighborhood = neighborhood;
-        this.complemento = complemento;
-        this.city = city;
-        this.state = state;
-        this.postalCode = postalCode;
-        this.country = country;
+    public Address() {
     }
 
     public String getStreet() {

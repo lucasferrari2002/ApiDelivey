@@ -5,20 +5,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.util.List;
-
 @Service
 public class AddressService {
 
-    private List<ValidadorAddress> validadores;
+    private ValidadorAddress validador;
 
     @Autowired
-    public AddressService(List<ValidadorAddress> validadores) {
-        this.validadores = validadores;
+    public AddressService(ValidadorAddress validador) {
+        this.validador = validador;
     }
 
     public boolean isValidAddress(Address address){
-        return validadores.stream().allMatch(validador -> validador.validar(address));
+        return validador.validar(address);
     }
 
 
